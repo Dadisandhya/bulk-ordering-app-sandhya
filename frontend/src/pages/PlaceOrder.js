@@ -4,30 +4,53 @@ import { useLocation } from "react-router-dom";
 function PlaceOrder() {
   const location = useLocation();
 
-const [productName] = useState(
-  location.state?.productName || ""
-);
-
+  const [productName] = useState(location.state?.productName || "");
   const [quantity, setQuantity] = useState("");
   const [buyerName, setBuyerName] = useState("");
   const [address, setAddress] = useState("");
   const [orderId, setOrderId] = useState(null);
+  const [error, setError] = useState("");
 
-  const placeOrder = (e) => {
-    e.preventDefault();
+  const placeOrder = async (e) => {
+    e.preventDefault(); // 🔴 VERY IMPORTANT
 
-    fetch("/orders", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        product_name: productName,
-        quantity,
-        buyer_name: buyerName,
-        address,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => setOrderId(data.orderId));
+    setError("");
+
+    if (!productName || !quantity || !buyerName || !address) {
+      setError("All fields are required");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:7000/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          product_name: productName,
+          quantity: Number(quantity),
+          buyer_name: buyerName,
+          address: address,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Order failed");
+      }
+
+      setOrderId(data.orderId);
+
+      // Clear form (except product)
+      setQuantity("");
+      setBuyerName("");
+      setAddress("");
+    } catch (err) {
+      console.error(err);
+      setError("Failed to place order. Please try again.");
+    }
   };
 
   return (
@@ -67,13 +90,19 @@ const [productName] = useState(
         />
         <br /><br />
 
+        {/* 🔴 MUST be type="submit" */}
         <button type="submit">Place Order</button>
       </form>
 
       {orderId && (
         <p className="success">
-          ✅ Order placed successfully! Order ID: <b>{orderId}</b>
+          ✅ Order placed successfully! <br />
+          <b>Order ID:</b> {orderId}
         </p>
+      )}
+
+      {error && (
+        <p className="error">{error}</p>
       )}
     </div>
   );
