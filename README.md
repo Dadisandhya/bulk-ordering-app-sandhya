@@ -21,3 +21,30 @@ A simple full-stack web application that allows users to browse vegetables and f
 - Update order status (Pending → Delivered)
 
 ## 📂 Project Structure
+backend/
+frontend/
+README.md
+
+
+## ▶️ How to Run Locally
+
+### Backend
+```bash
+cd backend
+npm install
+node server.js
+
+
+Backend runs on:
+
+http://localhost:7000
+
+Frontend
+cd frontend
+npm install
+npm start
+
+
+Frontend runs on:
+
+http://localhost:3000
