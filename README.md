@@ -1,35 +1,33 @@
-# 🥕 Bulk Vegetable & Fruit Ordering Platform
+# Bulk Vegetable & Fruit Ordering Platform
 
-## 📌 Project Overview
+## Project Overview
 A simple full-stack web application that allows users to browse vegetables and fruits, place bulk orders, track order status, and manage orders from an admin view.
 
-## 🛠️ Tech Stack
-- Frontend: React.js, React Router
-- Backend: Node.js, Express.js
-- Database: SQLite
-- Styling: CSS
+## Tech Stack
+Frontend: React.js, React Router Backend: Node.js, Express.js Database: SQLite
+Styling: CSS
 
-## ✨ Features
+## Features
 
 ### Buyer
-- View available vegetables and fruits
-- Place bulk orders
-- Track order status using Order ID
+View available vegetables and fruits
+Place bulk orders
+Track order status using Order ID
 
 ### Admin
-- View all orders
-- Update order status (Pending → Delivered)
+View all orders
+Update order status (Pending → Delivered)
 
-## 📂 Project Structure
+##  Project Structure
 backend/
 frontend/
 README.md
 
 
-## ▶️ How to Run Locally
+## How to Run Locally
 
 ### Backend
-```bash
+
 cd backend
 npm install
 node server.js
